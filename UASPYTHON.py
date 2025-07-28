@@ -1,54 +1,32 @@
 import streamlit as st
 
-# ========== CSS ========== #
+# ================== CSS untuk Tampilan Menarik ==================
 st.markdown("""
     <style>
-    /* Background gradasi */
     .stApp {
-        background: linear-gradient(to bottom right, #E0EAFC, #CFDEF3);
+        background-color: #f5f7fa;
         font-family: 'Segoe UI', sans-serif;
-        color: #333333;
     }
-
-    /* Judul aplikasi */
     h1 {
-        color: #005c97;
-        text-shadow: 1px 1px 2px #ccc;
+        color: #2E86C1;
     }
-
-    /* Subheader */
-    h2, h3 {
-        color: #007acc;
-    }
-
-    /* Card effect */
-    .stMarkdown, .stTextInput, .stTextArea, .stNumberInput, .stButton, .stSelectbox {
-        background-color: #ffffffcc;
-        border-radius: 10px;
-        padding: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        margin-bottom: 10px;
-    }
-
-    /* Button styling */
-    button {
-        background-color: #007acc !important;
-        color: white !important;
+    .stButton>button {
+        background-color: #2ECC71;
+        color: white;
         border-radius: 8px;
+        height: 3em;
+        width: 100%;
     }
-
-    button:hover {
-        background-color: #005c97 !important;
-    }
-
-    /* Info box */
-    .stAlert {
-        border-radius: 10px;
+    .stTextInput>div>div>input {
+        background-color: #ffffff;
+        padding: 10px;
+        border: 1px solid #D5D8DC;
+        border-radius: 5px;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# ========== Class Mahasiswa ========== #
+# ================== Kelas Mahasiswa ==================
 class Mahasiswa:
     def __init__(self, nim, nama, no_hp, email, alamat):
         self.nim = nim
@@ -58,32 +36,41 @@ class Mahasiswa:
         self.alamat = alamat
 
     def __str__(self):
-        return (
-            f"NIM: {self.nim}, Nama: {self.nama}, "
-            f"No HP: {self.no_hp}, Email: {self.email}, Alamat: {self.alamat}"
-        )
+        return (f"NIM: {self.nim}, Nama: {self.nama}, No HP: {self.no_hp}, "
+                f"Email: {self.email}, Alamat: {self.alamat}")
 
-# ========== Inisialisasi Data ========== #
+# ================== Inisialisasi Data ==================
 if 'data_mahasiswa' not in st.session_state:
     st.session_state.data_mahasiswa = []
 
-# ========== Tampilan Utama ========== #
-st.title("📚 Aplikasi CRUD Mahasiswa")
-st.write("### Silakan pilih menu di bawah ini:")
+# ================== Tampilan Utama ==================
+st.title("📘 Aplikasi CRUD Mahasiswa")
 
-menu = st.selectbox("Pilih Menu:", ["Lihat Data", "Tambah Data", "Ubah Data", "Hapus Data"])
+st.write("### Pilihan Menu:")
+st.write("1. Lihat Data")
+st.write("2. Tambah Data")
+st.write("3. Ubah Data")
+st.write("4. Hapus Data")
 
-# ========== Menu: Lihat Data ========== #
-if menu == "Lihat Data":
+menu = st.text_input("Masukkan angka menu (1-4):")
+
+# ================== Menu 1: Lihat Data ==================
+if menu == "1":
     st.subheader("📄 Daftar Mahasiswa")
     if st.session_state.data_mahasiswa:
         for i, mhs in enumerate(st.session_state.data_mahasiswa):
-            st.markdown(f"**{i+1}. {mhs}**")
+            st.markdown(f"""
+                **{i+1}. {mhs.nama}**
+                - NIM: {mhs.nim}  
+                - No HP: {mhs.no_hp}  
+                - Email: {mhs.email}  
+                - Alamat: {mhs.alamat}
+            """)
     else:
         st.info("Belum ada data.")
 
-# ========== Menu: Tambah Data ========== #
-elif menu == "Tambah Data":
+# ================== Menu 2: Tambah Data ==================
+elif menu == "2":
     st.subheader("➕ Tambah Mahasiswa")
     nim = st.text_input("Masukkan NIM")
     nama = st.text_input("Masukkan Nama")
@@ -94,40 +81,41 @@ elif menu == "Tambah Data":
         if nim and nama and no_hp and email and alamat:
             mhs = Mahasiswa(nim, nama, no_hp, email, alamat)
             st.session_state.data_mahasiswa.append(mhs)
-            st.success("✅ Data berhasil disimpan!")
+            st.success("Data berhasil ditambahkan.")
         else:
-            st.warning("⚠️ Mohon isi semua field!")
+            st.warning("Harap isi semua kolom.")
 
-# ========== Menu: Ubah Data ========== #
-elif menu == "Ubah Data":
-    st.subheader("✏️ Ubah Data Mahasiswa")
+# ================== Menu 3: Ubah Data ==================
+elif menu == "3":
+    st.subheader("✏️ Ubah Mahasiswa")
     if st.session_state.data_mahasiswa:
-        idx = st.number_input("Pilih nomor data yang ingin diubah:", min_value=1, max_value=len(st.session_state.data_mahasiswa))
-        selected = st.session_state.data_mahasiswa[idx-1]
-
-        new_nim = st.text_input("NIM Baru", value=selected.nim)
-        new_nama = st.text_input("Nama Baru", value=selected.nama)
-        new_no_hp = st.text_input("No HP Baru", value=selected.no_hp)
-        new_email = st.text_input("Email Baru", value=selected.email)
-        new_alamat = st.text_area("Alamat Baru", value=selected.alamat)
-
+        index = st.number_input("Masukkan nomor data yang ingin diubah:", min_value=1, max_value=len(st.session_state.data_mahasiswa))
+        mhs = st.session_state.data_mahasiswa[index - 1]
+        new_nim = st.text_input("Masukkan NIM baru", value=mhs.nim)
+        new_nama = st.text_input("Masukkan Nama baru", value=mhs.nama)
+        new_hp = st.text_input("Masukkan No HP baru", value=mhs.no_hp)
+        new_email = st.text_input("Masukkan Email baru", value=mhs.email)
+        new_alamat = st.text_area("Masukkan Alamat baru", value=mhs.alamat)
         if st.button("Ubah"):
-            selected.nim = new_nim
-            selected.nama = new_nama
-            selected.no_hp = new_no_hp
-            selected.email = new_email
-            selected.alamat = new_alamat
-            st.success("✅ Data berhasil diubah!")
+            if new_nim and new_nama and new_hp and new_email and new_alamat:
+                st.session_state.data_mahasiswa[index - 1] = Mahasiswa(new_nim, new_nama, new_hp, new_email, new_alamat)
+                st.success("Data berhasil diubah.")
+            else:
+                st.warning("Harap isi semua kolom.")
     else:
         st.info("Belum ada data.")
 
-# ========== Menu: Hapus Data ========== #
-elif menu == "Hapus Data":
-    st.subheader("🗑️ Hapus Data Mahasiswa")
+# ================== Menu 4: Hapus Data ==================
+elif menu == "4":
+    st.subheader("🗑️ Hapus Mahasiswa")
     if st.session_state.data_mahasiswa:
-        idx = st.number_input("Pilih nomor data yang ingin dihapus:", min_value=1, max_value=len(st.session_state.data_mahasiswa))
+        index = st.number_input("Masukkan nomor data yang ingin dihapus:", min_value=1, max_value=len(st.session_state.data_mahasiswa))
         if st.button("Hapus"):
-            deleted = st.session_state.data_mahasiswa.pop(idx-1)
-            st.success(f"✅ Data {deleted.nama} berhasil dihapus!")
+            deleted = st.session_state.data_mahasiswa.pop(index - 1)
+            st.success(f"Data {deleted.nama} berhasil dihapus.")
     else:
         st.info("Belum ada data.")
+
+# ================== Validasi Input Menu ==================
+elif menu != "":
+    st.warning("Masukkan angka 1 - 4 sesuai menu.")
