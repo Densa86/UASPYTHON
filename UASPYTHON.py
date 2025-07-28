@@ -11,7 +11,7 @@ st.markdown(
         background-image: linear-gradient(to bottom right, #e0f7fa, #fce4ec);
         padding: 30px;
         border-radius: 10px;
-        color: #333;
+        color: #444;
         font-family: 'Segoe UI', sans-serif;
     }
     .stTextInput>div>div>input {
