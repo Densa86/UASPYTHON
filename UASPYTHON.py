@@ -11,7 +11,7 @@ st.markdown(
         background-image: linear-gradient(to bottom right, #e0f7fa, #fce4ec);
         padding: 30px;
         border-radius: 10px;
-        color: #444;
+        color: #333;
         font-family: 'Segoe UI', sans-serif;
     }
     .stTextInput>div>div>input {
@@ -20,7 +20,7 @@ st.markdown(
         padding: 10px;
     }
     .stButton>button {
-        background-color: #4CAF50;
+        background-color: #4Cf89;
         color: white;
         padding: 8px 16px;
         border: none;
