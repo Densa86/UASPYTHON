@@ -74,7 +74,7 @@ if 'data_mahasiswa' not in st.session_state:
     st.session_state.data_mahasiswa = []
 
 # ========== Tampilan Utama ========== #
-st.title("📚 Aplikasi CRUD Mahasiswa")
+st.title("📚 MyStudent Manager")
 st.write("### Silakan pilih menu di bawah ini:")
 
 menu = st.selectbox("Pilih Menu:", ["Lihat Data", "Tambah Data", "Ubah Data", "Hapus Data"])
