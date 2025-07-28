@@ -91,11 +91,11 @@ if menu == "Lihat Data":
 # ========== Menu: Tambah Data ========== #
 elif menu == "Tambah Data":
     st.subheader("➕ Tambah Mahasiswa")
-    nim = st.text_input("Masukkan NIM", placeholder="Contoh: 22010001")
-    nama = st.text_input("Masukkan Nama", placeholder="Contoh: Budi Santoso")
+    nim = st.text_input("Masukkan NIM", placeholder="Contoh: 24.02.1107")
+    nama = st.text_input("Masukkan Nama", placeholder="Contoh: Raden Said")
     no_hp = st.text_input("Masukkan No HP", placeholder="Contoh: 081234567890")
-    email = st.text_input("Masukkan Email", placeholder="Contoh: budi@email.com")
-    alamat = st.text_area("Masukkan Alamat", placeholder="Contoh: Jl. Melati No. 5, Jakarta")
+    email = st.text_input("Masukkan Email", placeholder="Contoh: saidygy@email.com")
+    alamat = st.text_area("Masukkan Alamat", placeholder="Contoh: kwarakan,sidorejo,lendah,kulon progo,D.I. Yogyakarta")
     if st.button("Simpan"):
         if nim and nama and no_hp and email and alamat:
             mhs = Mahasiswa(nim, nama, no_hp, email, alamat)
