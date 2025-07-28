@@ -1,42 +1,54 @@
 import streamlit as st
 
-# ======= CUSTOM CSS =======
-st.markdown(
-    """
+# ========== CSS ========== #
+st.markdown("""
     <style>
-    body {
-        background-color: #f4f4f8;
-    }
-    .main {
-        background-image: linear-gradient(to bottom right, #e0f7fa, #fce4ec);
-        padding: 30px;
-        border-radius: 10px;
-        color: #333;
+    /* Background gradasi */
+    .stApp {
+        background: linear-gradient(to bottom right, #E0EAFC, #CFDEF3);
         font-family: 'Segoe UI', sans-serif;
+        color: #333333;
     }
-    .stTextInput>div>div>input {
+
+    /* Judul aplikasi */
+    h1 {
+        color: #005c97;
+        text-shadow: 1px 1px 2px #ccc;
+    }
+
+    /* Subheader */
+    h2, h3 {
+        color: #007acc;
+    }
+
+    /* Card effect */
+    .stMarkdown, .stTextInput, .stTextArea, .stNumberInput, .stButton, .stSelectbox {
+        background-color: #ffffffcc;
         border-radius: 10px;
-        border: 1px solid #ccc;
         padding: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
     }
-    .stButton>button {
-        background-color: #4Cf89;
-        color: white;
-        padding: 8px 16px;
-        border: none;
+
+    /* Button styling */
+    button {
+        background-color: #007acc !important;
+        color: white !important;
+        border-radius: 8px;
+    }
+
+    button:hover {
+        background-color: #005c97 !important;
+    }
+
+    /* Info box */
+    .stAlert {
         border-radius: 10px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-    .stButton>button:hover {
-        background-color: #45a049;
     }
     </style>
-    """,
-    unsafe_allow_html=True
-)
+""", unsafe_allow_html=True)
 
-# ====== KELAS MAHASISWA ======
+# ========== Class Mahasiswa ========== #
 class Mahasiswa:
     def __init__(self, nim, nama, no_hp, email, alamat):
         self.nim = nim
@@ -51,36 +63,26 @@ class Mahasiswa:
             f"No HP: {self.no_hp}, Email: {self.email}, Alamat: {self.alamat}"
         )
 
-# ====== INISIALISASI DATA ======
+# ========== Inisialisasi Data ========== #
 if 'data_mahasiswa' not in st.session_state:
     st.session_state.data_mahasiswa = []
 
-# ====== TAMPILAN UTAMA ======
-st.markdown("<div class='main'>", unsafe_allow_html=True)
-
+# ========== Tampilan Utama ========== #
 st.title("📚 Aplikasi CRUD Mahasiswa")
-st.write("Kelola data mahasiswa dengan mudah dan cepat.")
+st.write("### Silakan pilih menu di bawah ini:")
 
-menu = st.selectbox("📌 Pilih Menu", ["Lihat Data", "Tambah Data", "Ubah Data", "Hapus Data"])
+menu = st.selectbox("Pilih Menu:", ["Lihat Data", "Tambah Data", "Ubah Data", "Hapus Data"])
 
-# ====== MENU LIHAT DATA ======
+# ========== Menu: Lihat Data ========== #
 if menu == "Lihat Data":
     st.subheader("📄 Daftar Mahasiswa")
     if st.session_state.data_mahasiswa:
         for i, mhs in enumerate(st.session_state.data_mahasiswa):
-            st.markdown(f"""
-                <div style="background-color:#ffffff;border:1px solid #ddd;padding:10px;border-radius:10px;margin-bottom:10px;">
-                <strong>{i+1}. {mhs.nama}</strong><br>
-                NIM: {mhs.nim}<br>
-                No HP: {mhs.no_hp}<br>
-                Email: {mhs.email}<br>
-                Alamat: {mhs.alamat}
-                </div>
-            """, unsafe_allow_html=True)
+            st.markdown(f"**{i+1}. {mhs}**")
     else:
         st.info("Belum ada data.")
 
-# ====== MENU TAMBAH ======
+# ========== Menu: Tambah Data ========== #
 elif menu == "Tambah Data":
     st.subheader("➕ Tambah Mahasiswa")
     nim = st.text_input("Masukkan NIM")
@@ -96,7 +98,7 @@ elif menu == "Tambah Data":
         else:
             st.warning("⚠️ Mohon isi semua field!")
 
-# ====== MENU UBAH ======
+# ========== Menu: Ubah Data ========== #
 elif menu == "Ubah Data":
     st.subheader("✏️ Ubah Data Mahasiswa")
     if st.session_state.data_mahasiswa:
@@ -119,15 +121,13 @@ elif menu == "Ubah Data":
     else:
         st.info("Belum ada data.")
 
-# ====== MENU HAPUS ======
+# ========== Menu: Hapus Data ========== #
 elif menu == "Hapus Data":
     st.subheader("🗑️ Hapus Data Mahasiswa")
     if st.session_state.data_mahasiswa:
         idx = st.number_input("Pilih nomor data yang ingin dihapus:", min_value=1, max_value=len(st.session_state.data_mahasiswa))
         if st.button("Hapus"):
             deleted = st.session_state.data_mahasiswa.pop(idx-1)
-            st.success(f"🗑️ Data {deleted.nama} berhasil dihapus!")
+            st.success(f"✅ Data {deleted.nama} berhasil dihapus!")
     else:
         st.info("Belum ada data.")
-
-st.markdown("</div>", unsafe_allow_html=True)
