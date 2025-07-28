@@ -1,66 +1,54 @@
 import streamlit as st
 
-# ================== CSS Tampilan Elegan ==================
+# ========== CSS ========== #
 st.markdown("""
     <style>
-    /* Background dan font */
+    /* Background gradasi */
     .stApp {
-        background-color: #f0f2f6;
+        background: linear-gradient(to bottom right, #E0EAFC, #CFDEF3);
         font-family: 'Segoe UI', sans-serif;
-        color: #1C1C1C;
-        padding: 10px;
+        color: #333333;
     }
 
-    /* Judul */
+    /* Judul aplikasi */
     h1 {
-        color: #2E86C1;
-        font-weight: bold;
-        font-size: 36px;
-        padding-bottom: 10px;
+        color: #005c97;
+        text-shadow: 1px 1px 2px #ccc;
     }
 
-    /* Subjudul */
-    h3 {
-        color: #1C1C1C;
-        font-weight: 600;
-        margin-top: 10px;
+    /* Subheader */
+    h2, h3 {
+        color: #007acc;
     }
 
-    /* Input */
-    .stTextInput>div>div>input, .stTextArea textarea {
-        border: 1px solid #ccc;
-        padding: 10px;
-        border-radius: 6px;
-        background-color: #ffffff;
-        color: #1C1C1C;
-    }
-
-    /* Tombol */
-    .stButton>button {
-        background-color: #3498DB;
-        color: white;
-        font-weight: bold;
-        padding: 0.5rem 1rem;
+    /* Card effect */
+    .stMarkdown, .stTextInput, .stTextArea, .stNumberInput, .stButton, .stSelectbox {
+        background-color: #ffffffcc;
         border-radius: 10px;
-        border: none;
-        transition: background-color 0.3s ease;
-        width: 100%;
+        padding: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
     }
 
-    .stButton>button:hover {
-        background-color: #2E86C1;
-    }
-
-    /* Info Box */
-    .stAlert {
-        background-color: #EBF5FB;
-        padding: 1rem;
+    /* Button styling */
+    button {
+        background-color: #007acc !important;
+        color: white !important;
         border-radius: 8px;
+    }
+
+    button:hover {
+        background-color: #005c97 !important;
+    }
+
+    /* Info box */
+    .stAlert {
+        border-radius: 10px;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# ================== Kelas Mahasiswa ==================
+# ========== Class Mahasiswa ========== #
 class Mahasiswa:
     def __init__(self, nim, nama, no_hp, email, alamat):
         self.nim = nim
@@ -70,43 +58,32 @@ class Mahasiswa:
         self.alamat = alamat
 
     def __str__(self):
-        return (f"NIM: {self.nim}, Nama: {self.nama}, No HP: {self.no_hp}, "
-                f"Email: {self.email}, Alamat: {self.alamat}")
+        return (
+            f"NIM: {self.nim}, Nama: {self.nama}, "
+            f"No HP: {self.no_hp}, Email: {self.email}, Alamat: {self.alamat}"
+        )
 
-# ================== Data Session State ==================
+# ========== Inisialisasi Data ========== #
 if 'data_mahasiswa' not in st.session_state:
     st.session_state.data_mahasiswa = []
 
-# ================== Tampilan Utama ==================
-st.title("📘 Aplikasi CRUD Mahasiswa")
+# ========== Tampilan Utama ========== #
+st.title("📚 Aplikasi CRUD Mahasiswa")
+st.write("### Silakan pilih menu di bawah ini:")
 
-st.write("### Pilihan Menu:")
-st.write("1. Lihat Data")
-st.write("2. Tambah Data")
-st.write("3. Ubah Data")
-st.write("4. Hapus Data")
+menu = st.selectbox("Pilih Menu:", ["Lihat Data", "Tambah Data", "Ubah Data", "Hapus Data"])
 
-menu = st.text_input("Masukkan angka menu (1-4):")
-
-# ================== Lihat Data ==================
-if menu == "1":
+# ========== Menu: Lihat Data ========== #
+if menu == "Lihat Data":
     st.subheader("📄 Daftar Mahasiswa")
     if st.session_state.data_mahasiswa:
         for i, mhs in enumerate(st.session_state.data_mahasiswa):
-            st.markdown(f"""
-                <div style="padding:10px; background-color:#ffffff; border-radius:8px; margin-bottom:10px;">
-                <strong>{i+1}. {mhs.nama}</strong><br>
-                NIM: {mhs.nim}<br>
-                No HP: {mhs.no_hp}<br>
-                Email: {mhs.email}<br>
-                Alamat: {mhs.alamat}
-                </div>
-            """, unsafe_allow_html=True)
+            st.markdown(f"**{i+1}. {mhs}**")
     else:
         st.info("Belum ada data.")
 
-# ================== Tambah Data ==================
-elif menu == "2":
+# ========== Menu: Tambah Data ========== #
+elif menu == "Tambah Data":
     st.subheader("➕ Tambah Mahasiswa")
     nim = st.text_input("Masukkan NIM")
     nama = st.text_input("Masukkan Nama")
@@ -117,41 +94,40 @@ elif menu == "2":
         if nim and nama and no_hp and email and alamat:
             mhs = Mahasiswa(nim, nama, no_hp, email, alamat)
             st.session_state.data_mahasiswa.append(mhs)
-            st.success("Data berhasil ditambahkan.")
+            st.success("✅ Data berhasil disimpan!")
         else:
-            st.warning("Harap isi semua kolom.")
+            st.warning("⚠️ Mohon isi semua field!")
 
-# ================== Ubah Data ==================
-elif menu == "3":
-    st.subheader("✏️ Ubah Mahasiswa")
+# ========== Menu: Ubah Data ========== #
+elif menu == "Ubah Data":
+    st.subheader("✏️ Ubah Data Mahasiswa")
     if st.session_state.data_mahasiswa:
-        index = st.number_input("Masukkan nomor data yang ingin diubah:", min_value=1, max_value=len(st.session_state.data_mahasiswa))
-        mhs = st.session_state.data_mahasiswa[index - 1]
-        new_nim = st.text_input("Masukkan NIM baru", value=mhs.nim)
-        new_nama = st.text_input("Masukkan Nama baru", value=mhs.nama)
-        new_hp = st.text_input("Masukkan No HP baru", value=mhs.no_hp)
-        new_email = st.text_input("Masukkan Email baru", value=mhs.email)
-        new_alamat = st.text_area("Masukkan Alamat baru", value=mhs.alamat)
+        idx = st.number_input("Pilih nomor data yang ingin diubah:", min_value=1, max_value=len(st.session_state.data_mahasiswa))
+        selected = st.session_state.data_mahasiswa[idx-1]
+
+        new_nim = st.text_input("NIM Baru", value=selected.nim)
+        new_nama = st.text_input("Nama Baru", value=selected.nama)
+        new_no_hp = st.text_input("No HP Baru", value=selected.no_hp)
+        new_email = st.text_input("Email Baru", value=selected.email)
+        new_alamat = st.text_area("Alamat Baru", value=selected.alamat)
+
         if st.button("Ubah"):
-            if new_nim and new_nama and new_hp and new_email and new_alamat:
-                st.session_state.data_mahasiswa[index - 1] = Mahasiswa(new_nim, new_nama, new_hp, new_email, new_alamat)
-                st.success("Data berhasil diubah.")
-            else:
-                st.warning("Harap isi semua kolom.")
+            selected.nim = new_nim
+            selected.nama = new_nama
+            selected.no_hp = new_no_hp
+            selected.email = new_email
+            selected.alamat = new_alamat
+            st.success("✅ Data berhasil diubah!")
     else:
         st.info("Belum ada data.")
 
-# ================== Hapus Data ==================
-elif menu == "4":
-    st.subheader("🗑️ Hapus Mahasiswa")
+# ========== Menu: Hapus Data ========== #
+elif menu == "Hapus Data":
+    st.subheader("🗑️ Hapus Data Mahasiswa")
     if st.session_state.data_mahasiswa:
-        index = st.number_input("Masukkan nomor data yang ingin dihapus:", min_value=1, max_value=len(st.session_state.data_mahasiswa))
+        idx = st.number_input("Pilih nomor data yang ingin dihapus:", min_value=1, max_value=len(st.session_state.data_mahasiswa))
         if st.button("Hapus"):
-            deleted = st.session_state.data_mahasiswa.pop(index - 1)
-            st.success(f"Data {deleted.nama} berhasil dihapus.")
+            deleted = st.session_state.data_mahasiswa.pop(idx-1)
+            st.success(f"✅ Data {deleted.nama} berhasil dihapus!")
     else:
         st.info("Belum ada data.")
-
-# ================== Validasi Input ==================
-elif menu != "":
-    st.warning("Masukkan angka 1 - 4 sesuai menu.")
