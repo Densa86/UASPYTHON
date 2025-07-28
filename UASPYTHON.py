@@ -94,7 +94,7 @@ elif menu == "Tambah Data":
     nim = st.text_input("Masukkan NIM", placeholder="Contoh: 24.02.1107")
     nama = st.text_input("Masukkan Nama", placeholder="Contoh: Raden Said")
     no_hp = st.text_input("Masukkan No HP", placeholder="Contoh: 081234567890")
-    email = st.text_input("Masukkan Email", placeholder="Contoh: saidygy@email.com")
+    email = st.text_input("Masukkan Email", placeholder="Contoh: saidygy@gmail.com")
     alamat = st.text_area("Masukkan Alamat", placeholder="Contoh: kwarakan,sidorejo,lendah,kulon progo,D.I. Yogyakarta")
     if st.button("Simpan"):
         if nim and nama and no_hp and email and alamat:
