@@ -30,6 +30,12 @@ st.markdown("""
         margin-bottom: 10px;
     }
 
+    /* Placeholder style */
+    input::placeholder, textarea::placeholder {
+        color: #888 !important;
+        font-style: italic;
+    }
+
     /* Button styling */
     button {
         background-color: #007acc !important;
@@ -85,11 +91,11 @@ if menu == "Lihat Data":
 # ========== Menu: Tambah Data ========== #
 elif menu == "Tambah Data":
     st.subheader("➕ Tambah Mahasiswa")
-    nim = st.text_input("Masukkan NIM")
-    nama = st.text_input("Masukkan Nama")
-    no_hp = st.text_input("Masukkan No HP")
-    email = st.text_input("Masukkan Email")
-    alamat = st.text_area("Masukkan Alamat")
+    nim = st.text_input("Masukkan NIM", placeholder="Contoh: 22010001")
+    nama = st.text_input("Masukkan Nama", placeholder="Contoh: Budi Santoso")
+    no_hp = st.text_input("Masukkan No HP", placeholder="Contoh: 081234567890")
+    email = st.text_input("Masukkan Email", placeholder="Contoh: budi@email.com")
+    alamat = st.text_area("Masukkan Alamat", placeholder="Contoh: Jl. Melati No. 5, Jakarta")
     if st.button("Simpan"):
         if nim and nama and no_hp and email and alamat:
             mhs = Mahasiswa(nim, nama, no_hp, email, alamat)
@@ -105,11 +111,11 @@ elif menu == "Ubah Data":
         idx = st.number_input("Pilih nomor data yang ingin diubah:", min_value=1, max_value=len(st.session_state.data_mahasiswa))
         selected = st.session_state.data_mahasiswa[idx-1]
 
-        new_nim = st.text_input("NIM Baru", value=selected.nim)
-        new_nama = st.text_input("Nama Baru", value=selected.nama)
-        new_no_hp = st.text_input("No HP Baru", value=selected.no_hp)
-        new_email = st.text_input("Email Baru", value=selected.email)
-        new_alamat = st.text_area("Alamat Baru", value=selected.alamat)
+        new_nim = st.text_input("NIM Baru", value=selected.nim, placeholder="Contoh: 22010001")
+        new_nama = st.text_input("Nama Baru", value=selected.nama, placeholder="Contoh: Budi Santoso")
+        new_no_hp = st.text_input("No HP Baru", value=selected.no_hp, placeholder="Contoh: 081234567890")
+        new_email = st.text_input("Email Baru", value=selected.email, placeholder="Contoh: budi@email.com")
+        new_alamat = st.text_area("Alamat Baru", value=selected.alamat, placeholder="Contoh: Jl. Melati No. 5, Jakarta")
 
         if st.button("Ubah"):
             selected.nim = new_nim
