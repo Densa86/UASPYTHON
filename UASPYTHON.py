@@ -6,9 +6,10 @@ st.markdown("""
     .stApp {
         background-color: #f5f7fa;
         font-family: 'Segoe UI', sans-serif;
+        color: #1C2833;  /* warna teks utama */
     }
-    h1 {
-        color: #2E86C1;
+    h1, h2, h3, h4 {
+        color: #154360 !important;  /* warna untuk judul */
     }
     .stButton>button {
         background-color: #2ECC71;
@@ -17,14 +18,16 @@ st.markdown("""
         height: 3em;
         width: 100%;
     }
-    .stTextInput>div>div>input {
+    .stTextInput>div>div>input, .stTextArea textarea {
         background-color: #ffffff;
         padding: 10px;
         border: 1px solid #D5D8DC;
         border-radius: 5px;
+        color: #1C2833;  /* warna teks input */
     }
     </style>
 """, unsafe_allow_html=True)
+
 
 # ================== Kelas Mahasiswa ==================
 class Mahasiswa:
