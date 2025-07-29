@@ -111,11 +111,11 @@ elif menu == "Ubah Data":
         idx = st.number_input("Pilih nomor data yang ingin diubah:", min_value=1, max_value=len(st.session_state.data_mahasiswa))
         selected = st.session_state.data_mahasiswa[idx-1]
 
-        new_nim = st.text_input("NIM Baru", value=selected.nim, placeholder="Contoh: 22010001")
-        new_nama = st.text_input("Nama Baru", value=selected.nama, placeholder="Contoh: Budi Santoso")
+        new_nim = st.text_input("NIM Baru", value=selected.nim, placeholder="Contoh: 24.02.1107")
+        new_nama = st.text_input("Nama Baru", value=selected.nama, placeholder="Contoh: Raden Said")
         new_no_hp = st.text_input("No HP Baru", value=selected.no_hp, placeholder="Contoh: 081234567890")
-        new_email = st.text_input("Email Baru", value=selected.email, placeholder="Contoh: budi@email.com")
-        new_alamat = st.text_area("Alamat Baru", value=selected.alamat, placeholder="Contoh: Jl. Melati No. 5, Jakarta")
+        new_email = st.text_input("Email Baru", value=selected.email, placeholder="Contoh: saidygy@gmail.com")
+        new_alamat = st.text_area("Alamat Baru", value=selected.alamat, placeholder="Contoh: kwarakan,sidorejo,lendah,kulon progo,D.I. Yogyakarta")
 
         if st.button("Ubah"):
             selected.nim = new_nim
